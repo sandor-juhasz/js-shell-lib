@@ -1,0 +1,40 @@
+#!/bin/bash
+###############################################################################
+# Installs the js-shell-lib and its dependencies.
+###############################################################################
+
+function install_fzf() {
+    echo "Setting up fzf..."
+    if ! which fzf >/dev/null; then
+        echo "Installing fzf from Github..."
+        git clone --depth 1 https://github.com/junegunn/fzf.git ~/.local/share/fzf
+        ~/.local/share/fzf/install
+    else
+        echo "fzf has already been installed, doing nothing."
+    fi    
+}
+
+function apt_check_packages_installed() {
+    dpkg -s "$@" > /dev/null 2>&1
+}
+
+function install_gum() {
+    echo "Installing Gum..."
+    if [[ ! -e /etc/apt/sources.list.d/charm.list ]]; then
+        sudo mkdir -p /etc/apt/keyrings
+        curl -fsSL https://repo.charm.sh/apt/gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/charm.gpg
+        echo "deb [signed-by=/etc/apt/keyrings/charm.gpg] https://repo.charm.sh/apt/ * *" | sudo tee /etc/apt/sources.list.d/charm.list
+        sudo apt update
+    fi
+    if ! apt_check_packages_installed gum; then
+        sudo apt install gum
+    else 
+        echo "Gum is already installed."
+    fi
+}
+
+if [[ -d ~/.local/share/js-shell-lib ]]; then
+    git clone https://github.com/sandor-juhasz/js-shell-lib.git ~/.local/share/js-shell-lib
+fi
+install_fzf
+install_gum
