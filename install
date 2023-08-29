@@ -9,6 +9,8 @@ function install_fzf() {
         echo "Installing fzf from Github..."
         git clone --depth 1 https://github.com/junegunn/fzf.git ~/.local/share/fzf
         ~/.local/share/fzf/install --no-key-bindings --no-completion --no-update-rc
+        mv ~/.fzf.bash ~/.config/bashrc.d/fzf.sh
+        mv ~/.fzf.zsh ~/.config/zshrc.d/fzf.sh 
     else
         echo "fzf has already been installed, doing nothing."
     fi    
