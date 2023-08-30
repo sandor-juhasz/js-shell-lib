@@ -35,7 +35,7 @@ function install_gum() {
     fi
 }
 
-if [[ -d ~/.local/share/js-shell-lib ]]; then
+if [[ ! -d ~/.local/share/js-shell-lib ]]; then
     git clone https://github.com/sandor-juhasz/js-shell-lib.git ~/.local/share/js-shell-lib
 fi
 install_fzf
