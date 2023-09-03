@@ -21,6 +21,11 @@ tui_confirm_continue() {
     [[ "$?" != 0 ]] && die
 }
 
+#
+# First argument: The message to display.
+# Second optional argument: default action "Yes" or "No"
+#
 tui_confirm() {
-    gum confirm "$1"
+    local default_action=${2:-Yes}
+    gum confirm "$1" --default="${default_action}"
 }
